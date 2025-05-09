@@ -53,23 +53,36 @@ function mostrarTareas() {
 
 // Marcar tarea como completada visualmente
 function completarTarea(index) {
- 
+  const tareasDOM = document.querySelectorAll('.tarea')
+  tareasDOM[index].classList.toggle('completada')
 }
 
 // Eliminar tarea
 function eliminarTarea(index) {
-  
+  const tareas = obtenerTareasLocalStorage()
+  tareas.splice(index, 1)
+  guardarTareasLocalStorage(tareas)
+  mostrarTareas()
 }
 
 // Crear una nueva tarea
 function nuevaTarea() {
-  
+  const texto = ingresarTarea.value.trim()
+  if (texto === '') return
+
+  const tareas = obtenerTareasLocalStorage()
+  tareas.push(texto)
+  guardarTareasLocalStorage(tareas)
+  ingresarTarea.value = ''
+  mostrarTareas()
 }
 
 // Eventos
-
+botonAgregar.addEventListener('click', nuevaTarea)
+ingresarTarea.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') nuevaTarea()
+});
 
 // Mostrar tareas al cargar
-
-
+window.addEventListener('load', mostrarTareas)
 
